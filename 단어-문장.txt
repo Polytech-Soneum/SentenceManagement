@@ -1,0 +1,31 @@
+def generate_sentence(words):
+    # 입력된 단어에 대응하는 원래 단어를 매핑하는 사전
+    word_to_word = {
+        "안녕하다": "안녕하세요",
+        "만나다": "만나서",
+        "반갑다": "반갑습니다"
+        # 필요한 경우에는 다른 단어와 대응하는 원래 단어를 추가할 수 있습니다.
+    }
+    
+    # 입력된 단어에 대응하는 원래 단어를 찾아 문장 생성
+    words = [word_to_word.get(word, word) for word in words]
+    sentence = " ".join(words)
+    return sentence
+
+def main():
+    while True:
+        # 사용자로부터 단어 입력 받기
+        words = input("단어를 입력하세요 (쉼표로 구분, 종료하려면 'exit' 입력): ")
+        if words.lower() == 'exit':
+            break  # 사용자가 'exit'을 입력하면 종료
+            
+        # 쉼표로 구분된 단어를 리스트로 변환
+        words = words.split(",")
+        words = [word.strip() for word in words]  # 공백 제거
+        
+        # 문장 생성
+        generated_sentence = generate_sentence(words)
+        print("생성된 문장:", generated_sentence)
+
+# 메인 함수 실행
+main()

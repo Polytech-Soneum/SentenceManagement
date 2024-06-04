@@ -1,0 +1,47 @@
+from konlpy.tag import Okt
+
+okt = Okt()
+
+#사용자 정의 사전
+custom_dictionary = {
+    '자다': '잘',       # '잘'을 '잘'로 변환
+    '나다': '나',
+    
+    
+    # 추가적으로 필요한 단어를 여기에 추가할 수 있습니다.
+}
+
+def process_word(word):
+    # 사용자 정의 사전에 있는 단어인 경우 변환
+    if word in custom_dictionary:
+        return custom_dictionary[word]
+    elif okt.pos(word)[0][1] == 'Josa':  # 조사인 경우 빈 문자열 반환
+        return ''
+    else:
+        return word
+        
+def process_sentence(sentence):
+    # 형태소 분석 및 어간 추출
+    words_with_stem = okt.morphs(sentence, stem=True)
+    
+    # 사용자 정의 사전을 활용하여 단어 처리
+    words_with_stem = [process_word(word) for word in words_with_stem]
+    
+    # 변환된 어간만 출력
+    print("어간 형태로 변환된 단어들:", words_with_stem)
+
+def main():
+    while True:
+        # 사용자로부터 문장 입력 받기
+        input_sentence = input("문장을 입력하세요 (종료하려면 'exit' 입력): ")
+        
+        # 'exit'을 입력하면 프로그램 종료
+        if input_sentence.lower() == 'exit':
+            print("프로그램을 종료합니다.")
+            break
+        
+        # 입력된 문장을 어간 변환하여 문장 출력
+        restored_sentence = process_sentence(input_sentence)
+
+# 메인 함수 실행
+main()
