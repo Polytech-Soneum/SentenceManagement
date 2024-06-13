@@ -7,8 +7,8 @@ def generate_sentence(words):
         # 필요한 경우에는 다른 단어와 대응하는 원래 단어를 추가할 수 있습니다.
     }
     
-    # 입력된 단어에 대응하는 원래 단어를 찾아 문장 생성
-    words = [word_to_word.get(word, word) for word in words]
+    # 입력된 단어에 대응하는 원래 단어를 찾아 문장 생성, "만나다" 가 문장의 마지막에 올 경우 매핑 안함  
+    words = [word_to_word.get(word, word) if i != len(words) - 1 or word != "만나다" else word for i, word in enumerate(words)]
     sentence = " ".join(words)
     return sentence
 
